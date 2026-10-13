@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NeuroDial Results</title>
+<meta name="description" content="Live results of the Med-EEG / NeuroDial meditation EEG analysis: model scores against chance and non-EEG baselines, per-person results, and the pre-registered replication.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div>
+      <h1>NeuroDial results</h1>
+      <p class="lede">Can EEG read meditation? Every score here is leave-one-person-out,
+        compared with shuffled-label chance <em>and</em> with what you'd get without EEG.</p>
+    </div>
+    <div class="live" aria-live="polite">
+      <div class="live-row"><span class="dot" id="live-dot"></span><span id="live-status">Loading results…</span></div>
+      <div class="live-meta" id="live-meta"></div>
+      <div class="live-actions">
+        <button type="button" id="refresh">Refresh</button>
+        <button type="button" id="theme" aria-label="Toggle light or dark theme">Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <div id="error" class="error" hidden></div>
+
+  <section aria-labelledby="tasks-h">
+    <h2 id="tasks-h">Discovery dataset: what can be decoded?</h2>
+    <p class="section-note" id="discovery-note"></p>
+    <div class="tabs" role="tablist" aria-label="Task" id="tabs"></div>
+    <div id="task-panel" role="tabpanel"></div>
+  </section>
+
+  <section aria-labelledby="rep-h">
+    <h2 id="rep-h">Independent pre-registered replication</h2>
+    <div id="replication"></div>
+  </section>
+
+  <section aria-labelledby="qc-h">
+    <h2 id="qc-h">Data quality</h2>
+    <div class="tiles" id="qc"></div>
+  </section>
+
+  <footer class="foot">
+    <p>Data: OpenNeuro <a href="https://openneuro.org/datasets/ds001787">ds001787</a>
+      (discovery) and <a href="https://openneuro.org/datasets/ds008836">ds008836</a> (replication).
+      Code, methods and the pre-registration: <a href="https://github.com/ManasDasri/Med-EEG">ManasDasri/Med-EEG</a>.</p>
+    <p>Scope: retrospective evaluation. Each held-out recording is normalised with its own full session,
+      so these numbers don't measure real-time (live headset) performance.</p>
+  </footer>
+</div>
+<div class="tooltip" id="tooltip" role="tooltip" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
