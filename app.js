@@ -60,11 +60,6 @@ function fmtP(p) {
   if (!isNum(p)) return "not tested";
   return p < 0.001 ? "< 0.001" : p.toFixed(3);
 }
-// Escape data-derived text before it goes into tooltip HTML.
-function esc(v) {
-  return String(v ?? "").replace(/[&<>"']/g, (c) =>
-    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
-}
 function shortSha(sha) { return sha ? String(sha).slice(0, 7) : "unknown"; }
 function when(iso) {
   if (!iso) return "unknown time";
@@ -76,8 +71,12 @@ function when(iso) {
 
 // ---------- tooltip ----------
 const tip = document.getElementById("tooltip");
-function showTip(evt, html) {
-  tip.innerHTML = html;
+// Tooltip content is built from text nodes only -- nothing is parsed as HTML,
+// so text from the results file can never inject markup or script.
+function showTip(evt, { title, lines = [], note }) {
+  tip.replaceChildren(el("b", {}, title ?? ""), ...lines.flatMap((l, i) =>
+    i ? [el("br"), String(l)] : [String(l)]),
+    ...(note ? [el("br"), el("span", { class: "muted" }, String(note))] : []));
   tip.hidden = false;
   const r = evt.target.getBoundingClientRect?.() || { left: 0, top: 0, width: 0 };
   const x = evt.clientX ?? r.left + r.width / 2;
@@ -87,11 +86,11 @@ function showTip(evt, html) {
   tip.style.top = `${Math.max(8, y - h - 12)}px`;
 }
 function hideTip() { tip.hidden = true; }
-function hoverable(node, html) {
+function hoverable(node, content) {
   node.setAttribute("tabindex", "0");
-  node.addEventListener("pointermove", (e) => showTip(e, html));
+  node.addEventListener("pointermove", (e) => showTip(e, content));
   node.addEventListener("pointerleave", hideTip);
-  node.addEventListener("focus", (e) => showTip(e, html));
+  node.addEventListener("focus", (e) => showTip(e, content));
   node.addEventListener("blur", hideTip);
   return node;
 }
@@ -236,11 +235,12 @@ function modelChart(task, t) {
     }
     svg.append(hoverable(sv("rect", { class: "hit", x: 0, y: cy - rowH / 2, width: W, height: rowH,
       "aria-label": `${m.label}: ${fmtScore(m.score, task)}` }),
-      `<b>${esc(m.label)}</b>${TASKS[task].metric}: ${fmtScore(m.score, task)}<br>` +
-      `95% interval: ${fmtScore(m.ci_low, task)} – ${fmtScore(m.ci_high, task)}<br>` +
-      `Shuffled-label chance: ${fmtScore(m.chance, task)}<br>` +
-      `p = ${fmtP(m.p_value)} · corrected p = ${fmtP(m.p_corrected)}<br>` +
-      `<span class="muted">${m.kind === "baseline" ? "No EEG used" : "EEG model"} · ${m.n_subjects ?? "?"} people</span>`));
+      { title: m.label, lines: [
+        `${TASKS[task].metric}: ${fmtScore(m.score, task)}`,
+        `95% interval: ${fmtScore(m.ci_low, task)} – ${fmtScore(m.ci_high, task)}`,
+        `Shuffled-label chance: ${fmtScore(m.chance, task)}`,
+        `p = ${fmtP(m.p_value)} · corrected p = ${fmtP(m.p_corrected)}`],
+        note: `${m.kind === "baseline" ? "No EEG used" : "EEG model"} · ${m.n_subjects ?? "?"} people` }));
   });
   return svg;
 }
@@ -271,8 +271,9 @@ function stripChart(task, scores, kind) {
     const cx = x(Math.round(p.score / bin) * bin), cy = base - r - 1 - p.level * (2 * r + 2);
     svg.append(hoverable(sv("circle", { class: "pt", cx, cy, r, fill: colorFor(kind),
       "aria-label": `${p.subject}: ${fmtScore(p.score, task)}` }),
-      `<b>${esc(p.subject)}</b>${TASKS[task].asPercent ? (p.score >= 0.5 ? "Classified correctly" : "Classified wrongly")
-        : `Within-person AUC: ${p.score.toFixed(3)}`}`));
+      { title: p.subject, lines: [TASKS[task].asPercent
+        ? (p.score >= 0.5 ? "Classified correctly" : "Classified wrongly")
+        : `Within-person AUC: ${p.score.toFixed(3)}`] }));
   }
   return svg;
 }
@@ -295,7 +296,7 @@ function personDots(task, scores, kind) {
     const ok = p.score >= 0.5;
     svg.append(hoverable(sv("circle", { cx, cy, r, fill: ok ? c : "var(--surface)",
       stroke: c, "stroke-width": 2, "aria-label": `${p.subject}: ${ok ? "correct" : "wrong"}` }),
-      `<b>${esc(p.subject)}</b>${ok ? "Classified correctly" : "Classified wrongly"}`));
+      { title: p.subject, lines: [ok ? "Classified correctly" : "Classified wrongly"] }));
   });
   return svg;
 }
@@ -333,9 +334,10 @@ function forestChart(rep) {
       sv("text", { class: "t1", x: x(r.ci_high) + 10, y: cy + 4 }, r.estimate.toFixed(3)));
     svg.append(hoverable(sv("rect", { class: "hit", x: 0, y: cy - rowH / 2, width: W, height: rowH,
       "aria-label": `${label}: ${r.estimate.toFixed(3)}` }),
-      `<b>${esc(label)}</b>Estimate: ${r.estimate.toFixed(3)} (95% ${r.ci_low.toFixed(3)} to ${r.ci_high.toFixed(3)})<br>` +
-      `One-sided p (negative): ${invalid ? "withheld, model didn't converge" : fmtP(r.p_one_sided_negative)}<br>` +
-      `<span class="muted">${esc(r.method)}${isNum(r.n_reports) ? ` · ${r.n_reports} reports` : ""} · ${r.n_participants ?? "?"} people</span>`));
+      { title: label, lines: [
+        `Estimate: ${r.estimate.toFixed(3)} (95% ${r.ci_low.toFixed(3)} to ${r.ci_high.toFixed(3)})`,
+        `One-sided p (negative): ${invalid ? "withheld, model didn't converge" : fmtP(r.p_one_sided_negative)}`],
+        note: `${r.method ?? ""}${isNum(r.n_reports) ? ` · ${r.n_reports} reports` : ""} · ${r.n_participants ?? "?"} people` }));
   });
   return svg;
 }
