@@ -28,6 +28,12 @@ const TASKS = {
     asPercent: false,
     about: "Within each person's session, can EEG tell moments with more mind wandering from moments with less? 0.5 is a coin flip.",
   },
+  depth: {
+    title: "Meditation depth (ds008836)",
+    metric: "Within-person AUC",
+    asPercent: false,
+    about: "A second dataset: 39 experienced Vipassana meditators rating their depth 1–5. Can EEG tell each person's deeper-than-usual reports from their shallower ones? 0.5 is a coin flip.",
+  },
 };
 
 const state = { data: null, task: "expertise", stripModel: {}, lastChecked: null };
