@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7f8f5">
+  <script src="theme.js"></script>
   <meta name="description" content="The complete NeuroDial research story: EEG preprocessing, features, model comparisons, validation, replication and honest limitations.">
   <title>Research notebook — NeuroDial</title>
   <link rel="stylesheet" href="atlas.css">
@@ -18,7 +19,10 @@
       <nav aria-label="On this page">
         <a href="#pipeline">Method</a><a href="#models">Models</a><a href="#validation">Evaluation</a><a href="#phases">Findings</a>
       </nav>
-      <a class="top-button" href="index.html">Results dashboard <span aria-hidden="true">↗</span></a>
+      <div class="header-actions">
+        <a class="top-button" href="index.html">Results <span aria-hidden="true">↗</span></a>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch color theme"><span class="theme-icon" data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Dark</span><span class="sr-only"> theme</span></button>
+      </div>
     </div>
   </header>
 
@@ -26,7 +30,7 @@
     <section class="hero shell" aria-labelledby="hero-heading">
       <div class="hero-copy">
         <p class="eyebrow"><span class="eyebrow-index">RESEARCH / 01</span> A FIELD GUIDE TO THE MED-EEG STUDY</p>
-        <h1 id="hero-heading">Understanding meditation through <em>EEG signals.</em></h1>
+        <h1 id="hero-heading">Understanding meditation through <span class="accent-text">EEG signals.</span></h1>
         <p class="hero-sub">What did the experiment measure? Why were different models compared? Which findings survived testing? A visual notebook explaining the methods, evidence and limitations.</p>
         <div class="hero-actions">
           <a class="action primary" href="#pipeline">Explore the methodology <span aria-hidden="true">↘</span></a>
@@ -36,16 +40,16 @@
       <figure class="research-figure">
         <div class="figure-header"><span>FIG 01 / SIGNAL REPRESENTATION</span><span>SCHEMATIC · NOT RECORDED EEG</span></div>
         <svg viewBox="0 0 540 310" role="img" aria-label="Three static illustrative EEG traces labelled Fz, Cz and Pz, followed by a simple feature extraction pathway">
-          <g stroke="#dfe6e1" stroke-width="1"><path d="M74 44H516M74 98H516M74 152H516M74 206H516M74 260H516"/><path d="M122 28V216M228 28V216M334 28V216M440 28V216"/></g>
-          <g fill="#697972" font-size="12" font-family="ui-monospace,monospace"><text x="22" y="72">Fz</text><text x="22" y="128">Cz</text><text x="22" y="182">Pz</text><text x="74" y="20">VOLTAGE OVER TIME / ILLUSTRATIVE</text></g>
-          <g stroke="#2c7164" fill="none" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round">
+          <g stroke="var(--figure-grid)" stroke-width="1"><path d="M74 44H516M74 98H516M74 152H516M74 206H516M74 260H516"/><path d="M122 28V216M228 28V216M334 28V216M440 28V216"/></g>
+          <g fill="var(--figure-label)" font-size="12" font-family="ui-monospace,monospace"><text x="22" y="72">Fz</text><text x="22" y="128">Cz</text><text x="22" y="182">Pz</text><text x="74" y="20">VOLTAGE OVER TIME / ILLUSTRATIVE</text></g>
+          <g stroke="var(--figure-trace)" fill="none" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round">
             <path d="M74 72L88 67L102 75L116 69L130 72L144 58L153 87L163 66L176 72L190 80L204 66L218 73L231 69L243 63L255 81L268 70L282 75L297 55L310 83L325 69L342 74L356 64L371 78L386 71L398 74L409 58L424 81L440 69L453 75L467 62L480 77L497 68L516 72"/>
             <path d="M74 126L90 129L102 117L115 135L127 120L141 128L152 115L166 139L180 118L195 126L205 132L219 118L234 129L245 116L260 135L273 124L286 130L300 112L314 140L328 119L343 128L355 118L371 136L382 121L400 129L415 117L431 134L447 120L464 127L477 113L490 137L504 121L516 126"/>
             <path d="M74 180L89 174L104 185L115 176L129 180L145 168L158 192L171 175L186 183L200 178L215 168L229 187L243 177L258 181L271 169L287 194L302 176L317 181L330 173L348 186L359 178L372 169L387 189L401 178L416 180L431 171L447 187L462 178L474 185L487 173L501 179L516 180"/>
           </g>
-          <g fill="#697972" font-family="ui-monospace,monospace" font-size="11"><text x="75" y="235">clean & segment</text><text x="278" y="235">extract features</text><text x="75" y="287">64 electrodes</text><text x="280" y="287">model → evaluate</text></g>
-          <path d="M75 247H510" stroke="#d5dfd8" stroke-width="1.5"/>
-          <rect x="75" y="250" width="95" height="7" rx="3" fill="#b5cec5"/><rect x="180" y="250" width="98" height="7" rx="3" fill="#83b6a5"/><rect x="289" y="250" width="98" height="7" rx="3" fill="#4f9280"/><rect x="398" y="250" width="111" height="7" rx="3" fill="#2c7164"/>
+          <g fill="var(--figure-label)" font-family="ui-monospace,monospace" font-size="11"><text x="75" y="235">clean & segment</text><text x="278" y="235">extract features</text><text x="75" y="287">64 electrodes</text><text x="280" y="287">model → evaluate</text></g>
+          <path d="M75 247H510" stroke="var(--figure-grid)" stroke-width="1.5"/>
+          <rect x="75" y="250" width="95" height="7" rx="3" fill="var(--figure-fill-1)"/><rect x="180" y="250" width="98" height="7" rx="3" fill="var(--figure-fill-2)"/><rect x="289" y="250" width="98" height="7" rx="3" fill="var(--figure-fill-3)"/><rect x="398" y="250" width="111" height="7" rx="3" fill="var(--figure-fill-4)"/>
         </svg>
         <figcaption>EEG is measured over time, converted into numerical features, then tested against participants' reports. This diagram illustrates the process; it is not a recording from the datasets.</figcaption>
       </figure>
@@ -62,7 +66,7 @@
       <div class="section-tag">01 — THE QUESTION</div>
       <div class="section-intro split">
         <div>
-          <h2 id="question-title">Not “can we read minds?” <br><em>Can we find useful signal?</em></h2>
+          <h2 id="question-title">Not “can we read minds?” <br><span class="accent-text">Can we find useful signal?</span></h2>
           <p class="lead">Participants meditate wearing EEG caps, then rate their own concentration, mind wandering, or meditation depth. We investigate whether preceding EEG helps predict those subjective reports.</p>
         </div>
         <div class="context-panel">
@@ -79,7 +83,7 @@
 
     <section class="section shell" id="pipeline" aria-labelledby="pipeline-title">
       <div class="section-tag">02 — FROM SIGNAL TO SCIENCE</div>
-      <div class="section-intro"><h2 id="pipeline-title">The entire pipeline, <em>step by step.</em></h2><p class="lead">Select a stage to understand what its code actually does. The process is offline: the dashboard shows previously computed results, not incoming headset data.</p></div>
+      <div class="section-intro"><h2 id="pipeline-title">The entire pipeline, <span class="accent-text">step by step.</span></h2><p class="lead">Select a stage to understand what its code actually does. The process is offline: the dashboard shows previously computed results, not incoming headset data.</p></div>
       <div class="pipeline-layout">
         <div class="pipeline-steps" role="group" aria-label="Research pipeline stages">
           <button type="button" class="pipeline-step selected" data-step="0" aria-pressed="true"><span class="step-index">01</span><span>Load EEG & reports<small>Two public OpenNeuro datasets</small></span><span aria-hidden="true">↗</span></button>
@@ -101,7 +105,7 @@
 
     <section class="section shell" id="features" aria-labelledby="features-title">
       <div class="section-tag">03 — FEATURE ENGINEERING</div>
-      <div class="section-intro"><h2 id="features-title">One brain recording. <em>Different ways to describe it.</em></h2><p class="lead">A feature is a numerical description of a signal. We don't train on “focus” itself: we train on measurements of EEG, paired with the participant's reported rating.</p></div>
+      <div class="section-intro"><h2 id="features-title">One brain recording. <span class="accent-text">Different ways to describe it.</span></h2><p class="lead">A feature is a numerical description of a signal. We don't train on “focus” itself: we train on measurements of EEG, paired with the participant's reported rating.</p></div>
       <div class="feature-grid">
         <article class="feature-card"><span class="feature-number">01 / POWER</span><h3>Gamma ÷ theta</h3><p>How strong is the fast gamma band (30–45 Hz) relative to slower theta (4–8 Hz)? The quotient is a candidate feature, not a concentration meter.</p>
           <div class="feature-interactive">
@@ -111,7 +115,7 @@
           </div><small class="illustration">Illustrative numbers only—this interactive calculator is not participant EEG.</small></article>
         <article class="feature-card"><span class="feature-number">02 / COUPLING</span><h3>Theta–gamma PAC</h3><p>Does the amplitude of fast gamma systematically depend on the phase of slower theta? The code measures a modulation index and compares it with time-shifted surrogates.</p>
           <div class="phase-viz" aria-label="Illustration of a slow theta wave and rapid gamma activity, not real EEG">
-            <svg viewBox="0 0 340 125" role="img" aria-label="Illustrative low-frequency theta wave overlaid with higher-frequency oscillation"><path id="theta-wave" fill="none" stroke="#e5ac71" stroke-width="3"/><path id="gamma-wave" fill="none" stroke="#64c9bf" stroke-width="1.5"/><line x1="0" y1="63" x2="340" y2="63" stroke="currentColor" opacity=".12"/></svg>
+            <svg viewBox="0 0 340 125" role="img" aria-label="Illustrative low-frequency theta wave overlaid with higher-frequency oscillation"><path id="theta-wave" fill="none" stroke="var(--figure-warm)" stroke-width="3"/><path id="gamma-wave" fill="none" stroke="var(--figure-trace)" stroke-width="1.5"/><line x1="0" y1="63" x2="340" y2="63" stroke="currentColor" opacity=".12"/></svg>
             <div class="viz-legend"><span><i class="legend-theta"></i> Theta phase</span><span><i class="legend-gamma"></i> Gamma amplitude</span></div>
           </div><small class="illustration">Schematic oscillations—not the calculated PAC values.</small></article>
         <article class="feature-card"><span class="feature-number">03 / SPECTRUM</span><h3>67 regional features</h3><p>Six scalp regions × 11 spectral measurements, plus frontal alpha asymmetry. These describe the amount and distribution of frequency content across the head.</p>
@@ -123,7 +127,7 @@
 
     <section class="section shell" id="models" aria-labelledby="models-title">
       <div class="section-tag">04 — MODEL LAB</div>
-      <div class="section-intro"><h2 id="models-title">Which helps more: <em>features or complexity?</em></h2><p class="lead">Ridge learns regularized weighted combinations. Gradient boosting builds many decision trees. Riemannian ridge transforms covariance matrices, then still uses ridge regression.</p></div>
+      <div class="section-intro"><h2 id="models-title">Which helps more: <span class="accent-text">features or complexity?</span></h2><p class="lead">Ridge learns regularized weighted combinations. Gradient boosting builds many decision trees. Riemannian ridge transforms covariance matrices, then still uses ridge regression.</p></div>
       <div class="model-concepts">
         <article><span>LINEAR + REGULARIZATION</span><h3>Ridge regression</h3><p>Fits feature weights while penalizing extreme weights. Useful when many EEG features are correlated.</p><code>prediction = Σ(weight × feature) + bias</code></article>
         <article><span>NONLINEAR PATTERNS</span><h3>Gradient boosting</h3><p>Combines many small decision trees, each improving the ensemble. Can capture thresholds and interactions ridge may miss.</p><code>prediction = initial + tree₁ + tree₂ + …</code></article>
@@ -141,7 +145,7 @@
 
     <section class="section shell" id="validation" aria-labelledby="validation-title">
       <div class="section-tag">05 — SCIENTIFIC VALIDATION</div>
-      <div class="section-intro"><h2 id="validation-title">How do we stop a model from <em>fooling us?</em></h2><p class="lead">A good training score isn't proof of a useful EEG effect. The project uses independent participants, non-EEG comparisons, permutation tests, and multiple-testing correction.</p></div>
+      <div class="section-intro"><h2 id="validation-title">How do we stop a model from <span class="accent-text">fooling us?</span></h2><p class="lead">A good training score isn't proof of a useful EEG effect. The project uses independent participants, non-EEG comparisons, permutation tests, and multiple-testing correction.</p></div>
       <div class="validation-grid">
         <article class="validation-card large">
           <span class="mini-eyebrow">01 / LEAVE-ONE-SUBJECT-OUT</span><h3>Train on everyone else. Test on one unseen person.</h3><p>Each participant's entire set of recordings stays out of model training in their test round. With 39 people, the depth experiment runs 39 held-out-person rounds per model.</p>
@@ -157,14 +161,14 @@
 
     <section class="section shell" id="findings" aria-labelledby="findings-title">
       <div class="section-tag">06 — WHAT THE EVIDENCE SAYS</div>
-      <div class="section-intro"><h2 id="findings-title">Not every result is positive. <em>That's the point.</em></h2><p class="lead">The published findings are modest and mixed. The website should make both positive and negative evidence visible, not just showcase a winning model.</p></div>
+      <div class="section-intro"><h2 id="findings-title">Not every result is positive. <span class="accent-text">That's the point.</span></h2><p class="lead">The published findings are modest and mixed. The website should make both positive and negative evidence visible, not just showcase a winning model.</p></div>
       <div id="finding-grid" class="finding-grid" aria-live="polite"><p>Loading results from the published research bundle…</p></div>
       <div class="result-disclaimer">The main scoreboard uses the repository's <strong>historical published results</strong>. The current README calls for regeneration under the latest audited settings. Follow-up values below are separately documented and are not new live calculations.</div>
     </section>
 
     <section class="section shell" id="phases" aria-labelledby="phases-title">
       <div class="section-tag">07 — RESEARCH TIMELINE</div>
-      <div class="section-intro"><h2 id="phases-title">The work doesn't end with <em>a model comparison.</em></h2><p class="lead">Each follow-up tests a different weakness of the original hypothesis. These are documented research phases, not features of a current clinical or real-time product.</p></div>
+      <div class="section-intro"><h2 id="phases-title">The work doesn't end with <span class="accent-text">a model comparison.</span></h2><p class="lead">Each follow-up tests a different weakness of the original hypothesis. These are documented research phases, not features of a current clinical or real-time product.</p></div>
       <div class="timeline">
         <article class="timeline-item"><span class="timeline-index">01–03</span><div><h3>Build the pipeline, compare features and models</h3><p>Inspect raw datasets, process the EEG, extract ratio/PAC and regional spectral measurements, compare simple linear models with boosting, and audit models against non-EEG baselines.</p><a href="https://github.com/ManasDasri/Med-EEG/blob/main/src/model_comparison.py" target="_blank" rel="noopener noreferrer">Model comparison source ↗</a></div></article>
         <article class="timeline-item"><span class="timeline-index">04–05</span><div><h3>Statistical relationships, electrode reduction, robustness</h3><p>Mixed-effects models account for repeated ratings within people. Training-only electrode selection probes whether fewer sensors suffice; the promising AF8 single-electrode lead did not replicate across sessions.</p><a href="https://github.com/ManasDasri/Med-EEG/blob/main/src/electrode_minimalism.py" target="_blank" rel="noopener noreferrer">Electrode experiment ↗</a></div></article>
@@ -185,7 +189,7 @@
 
     <section class="section shell" id="boundaries" aria-labelledby="boundaries-title">
       <div class="section-tag">08 — WHAT IT IS / IS NOT</div>
-      <div class="section-intro"><h2 id="boundaries-title">A research platform, <em>not a finished brain reader.</em></h2></div>
+      <div class="section-intro"><h2 id="boundaries-title">A research platform, <span class="accent-text">not a finished brain reader.</span></h2></div>
       <div class="boundary-grid"><div class="boundary-card"><span class="boundary-icon">✓</span><h3>What works today</h3><p>Reproducible Python analysis components, documented comparisons, held-out-person evaluation, published results, and a website that explains those results.</p></div><div class="boundary-card"><span class="boundary-icon muted">×</span><h3>What isn't demonstrated</h3><p>A validated live concentration meter, clinical accuracy, robust single-electrode prediction, real-time EEG acquisition, or forecasting using only past data.</p></div></div>
       <div class="publishing-flow"><span>PYTHON ANALYSIS</span><span aria-hidden="true">→</span><span>CSV TABLES</span><span aria-hidden="true">→</span><span><code>publish_results.py</code></span><span aria-hidden="true">→</span><span><code>results.json</code></span><span aria-hidden="true">→</span><span>WEB DASHBOARD</span></div>
       <p class="fine">The public results site fetches a JSON summary from GitHub. The live status refers to fetching newly published research summaries, not streaming someone's EEG. Some preprocessing and normalization use full sessions and therefore cannot be treated as prospective predictions.</p>
@@ -193,7 +197,7 @@
 
     <section class="section shell closing" id="next">
       <div class="section-tag">09 — NEXT QUESTIONS</div>
-      <h2>What comes <em>next?</em></h2>
+      <h2>What comes <span class="accent-text">next?</span></h2>
       <div class="next-grid"><div><span>01</span><h3>Reproduce & audit</h3><p>Regenerate preserved runs with updated statistical checks and stronger muscle-artifact controls.</p></div><div><span>02</span><h3>Validate again</h3><p>Test covariance models on new, balanced participants using fixed analysis settings.</p></div><div><span>03</span><h3>Build a prospective protocol</h3><p>Use past-only normalization and filtering before evaluating true live EEG prediction.</p></div></div>
       <div class="closing-actions"><a class="action primary" href="index.html">Inspect the model dashboard ↗</a><a class="action secondary" href="https://github.com/ManasDasri/Med-EEG" target="_blank" rel="noopener noreferrer">Read the Med-EEG code ↗</a></div>
     </section>
