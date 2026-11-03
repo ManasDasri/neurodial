@@ -4,24 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Results — NeuroDial Research</title>
+<meta name="theme-color" content="#f7f8f5">
+<script src="theme.js"></script>
 <meta name="description" content="Live results of the Med-EEG / NeuroDial meditation EEG analysis: model scores against chance and non-EEG baselines, per-person results, and the pre-registered replication.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="page">
-  <aside class="atlas-entry" aria-label="Research notebook"><div class="atlas-entry-copy"><span class="atlas-index">THE STUDY, EXPLAINED</span><strong>Explore the methodology behind the results.</strong><span>EEG processing, feature extraction, model comparisons, validation, and the full research timeline.</span></div><a href="atlas.html">Open research notebook <span aria-hidden="true">↗</span></a></aside>
+  <div class="dashboard-masthead">
+    <a class="dashboard-brand" href="index.html" aria-label="NeuroDial results home"><span class="dashboard-brand-mark">N<span>.</span></span><span>NeuroDial <small>/ RESULTS</small></span></a>
+    <div class="dashboard-masthead-actions">
+      <a class="dashboard-notebook-link" href="atlas.html">Research notebook <span aria-hidden="true">↗</span></a>
+      <button id="theme" class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Switch color theme"><span class="theme-icon" data-theme-icon aria-hidden="true">☾</span><span data-theme-label>Dark</span><span class="sr-only"> theme</span></button>
+    </div>
+  </div>
   <header class="top">
     <div>
       <h1>NeuroDial results</h1>
       <p class="lede">Can EEG read meditation? Every score here is leave-one-person-out,
-        compared with shuffled-label chance <em>and</em> with what you'd get without EEG.</p>
+        compared with shuffled-label chance <strong>and</strong> with what you'd get without EEG.</p>
     </div>
     <div class="live" aria-live="polite">
       <div class="live-row"><span class="dot" id="live-dot"></span><span id="live-status">Loading results…</span></div>
       <div class="live-meta" id="live-meta"></div>
       <div class="live-actions">
         <button type="button" id="refresh">Refresh</button>
-        <button type="button" id="theme" aria-label="Toggle light or dark theme">Theme</button>
       </div>
     </div>
   </header>
