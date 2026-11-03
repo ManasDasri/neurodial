@@ -19,19 +19,23 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #0d0d0d;
-  --surface: #1a1a19;
-  --text-1: #f0efec;
-  --text-2: #c3c2b7;
-  --grid: #2c2c2a;
-  --axis: #383835;
-  --ring: rgba(255, 255, 255, 0.10);
-  --series-eeg: #3987e5;
-  --series-base: #d95926;
-  --good-text: #0ca30c;
-  --focus: #3987e5;
+  --page:#111a1a;
+  --surface:#1a2626;
+  --text-1:#edf3ed;
+  --text-2:#c3d0c8;
+  --muted:#a1b4a9;
+  --grid:#33463f;
+  --axis:#567164;
+  --ring:#33463f;
+  --series-eeg:#96d5b4;
+  --series-base:#d4aa7e;
+  --good:#76bea2;
+  --warning:#deb27f;
+  --serious:#e3aa84;
+  --critical:#e49b8e;
+  --good-text:#96d5b4;
+  --focus:#96d5b4;
 }
-
 * { box-sizing: border-box; }
 html, body { margin: 0; }
 body {
@@ -165,5 +169,42 @@ button{border-radius:6px}
 .atlas-entry-copy strong{font-size:17px;line-height:1.35;letter-spacing:-.025em;font-weight:650}
 .atlas-entry-copy>span:last-child{font-size:12px;color:var(--text-2);max-width:580px}
 .atlas-entry>a{font-size:12px;font-weight:700;text-decoration:none;border:1px solid var(--ring);border-radius:6px;padding:10px 14px;white-space:nowrap}
-.atlas-entry>a:hover{background:#edf3ed}
+.atlas-entry>a:hover{background:var(--surface)}
 @media(max-width:640px){.page{padding:22px 18px 45px}.atlas-entry{display:block}.atlas-entry>a{margin-top:13px;display:inline-block}.top{padding-top:8px}}
+
+
+/* Shared visual language between research notebook and results explorer */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+body{font-family:'DM Sans',system-ui,-apple-system,sans-serif}
+.page{max-width:1140px}
+h1{font-size:clamp(28px,3.3vw,42px)}
+h2{font-size:21px}
+button{transition:background-color .14s ease,border-color .14s ease}
+.dashboard-masthead{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:6px 0 23px;margin-bottom:19px;border-bottom:1px solid var(--grid)}
+.dashboard-brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:17px;letter-spacing:-.045em;font-weight:700;white-space:nowrap}
+.dashboard-brand-mark{display:inline-grid;place-items:center;width:33px;height:33px;color:#fff;background:#202b29;border-radius:8px;font-size:20px}
+.dashboard-brand-mark span{color:#91baa6}
+.dashboard-brand small{color:var(--text-2);letter-spacing:.06em;font-size:10px;font-weight:600;vertical-align:1px}
+.dashboard-masthead-actions{display:flex;align-items:center;gap:9px}
+.dashboard-notebook-link{text-decoration:none;font-size:12px;font-weight:700;border:1px solid var(--ring);padding:9px 13px;border-radius:7px;white-space:nowrap}
+.dashboard-notebook-link:hover{background:var(--surface)}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:90px;border:1px solid var(--ring);background:var(--surface);color:var(--text-1);border-radius:7px;padding:9px 12px;font-size:12px;font-weight:650;line-height:1.5}
+.theme-toggle:hover{border-color:var(--series-eeg);background:var(--page)}
+.theme-icon{font-size:17px;width:16px;line-height:1}
+.sr-only{position:absolute;clip:rect(0,0,0,0);clip-path:inset(50%);height:1px;width:1px;overflow:hidden;white-space:nowrap}
+.top{padding-top:13px;border-top:0}
+.live{padding:13px 15px}
+.card,.tile{box-shadow:0 3px 15px rgba(20,43,28,.025)}
+svg .chance-tick{stroke:var(--text-1)}
+svg .t1{fill:var(--text-1)}
+.foot{margin-top:58px}
+:root[data-theme="dark"] .dashboard-brand-mark{color:#10211b;background:#96d5b4}
+:root[data-theme="dark"] .dashboard-brand-mark span{color:#40755e}
+:root[data-theme="dark"] .card,:root[data-theme="dark"] .tile{box-shadow:none}
+:root[data-theme="dark"] .dot.ok{background:#96d5b4}
+:root[data-theme="dark"] .atlas-entry>a:hover{background:#20312e}
+:root[data-theme="dark"] .tooltip{background:var(--surface);border-color:var(--ring)}
+:root[data-theme="dark"] .tabs button[aria-selected="true"]{border-color:var(--series-eeg)}
+:root[data-theme="dark"] .chart-scroll{scrollbar-color:#567164 var(--page)}
+@media(max-width:650px){.dashboard-masthead{flex-wrap:wrap}.dashboard-masthead-actions{width:100%;justify-content:space-between}.dashboard-notebook-link{font-size:11px}.theme-toggle{min-width:82px}.live{width:100%}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
