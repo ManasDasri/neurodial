@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#091521">
+  <meta name="theme-color" content="#f7f8f5">
   <meta name="description" content="The complete NeuroDial research story: EEG preprocessing, features, model comparisons, validation, replication and honest limitations.">
-  <title>Research Atlas · NeuroDial</title>
+  <title>Research notebook — NeuroDial</title>
   <link rel="stylesheet" href="atlas.css">
   <script defer src="atlas.js"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to research</a>
-  <div id="reading-progress" class="reading-progress" aria-hidden="true"></div>
   <header class="site-header">
     <div class="shell header-inner">
-      <a href="index.html" class="brand"><span class="brand-symbol" aria-hidden="true">◉</span> NEURODIAL <span class="brand-muted">/ RESEARCH ATLAS</span></a>
-      <nav aria-label="Research navigation">
-        <a href="#pipeline">Pipeline</a><a href="#features">Features</a><a href="#models">Models</a><a href="#validation">Validation</a><a href="#findings">Evidence</a><a href="#phases">Phases</a>
+      <a href="index.html" class="brand" aria-label="NeuroDial results home"><span class="brand-mark" aria-hidden="true">N<span class="brand-period">.</span></span><span>NeuroDial</span></a>
+      <span class="header-label">Research notebook <span>·</span> Med-EEG</span>
+      <nav aria-label="On this page">
+        <a href="#pipeline">Method</a><a href="#models">Models</a><a href="#validation">Evaluation</a><a href="#phases">Findings</a>
       </nav>
       <a class="top-button" href="index.html">Results dashboard <span aria-hidden="true">↗</span></a>
     </div>
@@ -25,39 +25,37 @@
   <main id="main">
     <section class="hero shell" aria-labelledby="hero-heading">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="pulse-dot"></span> MED-EEG / THE RESEARCH EXPLAINED <span class="small-divider">·</span> OFFLINE ANALYSIS</p>
-        <h1 id="hero-heading">Can EEG reveal <em>how deeply</em> someone is meditating?</h1>
-        <p class="hero-sub">Explore the journey from raw scalp signals to machine-learning predictions. See why we tried different features, why the best model isn't necessarily the most complicated, and why negative results matter.</p>
+        <p class="eyebrow"><span class="eyebrow-index">RESEARCH / 01</span> A FIELD GUIDE TO THE MED-EEG STUDY</p>
+        <h1 id="hero-heading">Understanding meditation through <em>EEG signals.</em></h1>
+        <p class="hero-sub">What did the experiment measure? Why were different models compared? Which findings survived testing? A visual notebook explaining the methods, evidence and limitations.</p>
         <div class="hero-actions">
-          <a class="action primary" href="#pipeline">Explore the pipeline <span aria-hidden="true">↓</span></a>
-          <a class="action secondary" href="#findings">See what we found <span aria-hidden="true">↗</span></a>
+          <a class="action primary" href="#pipeline">Explore the methodology <span aria-hidden="true">↘</span></a>
+          <a class="action secondary" href="#findings">Review the evidence <span aria-hidden="true">→</span></a>
         </div>
-        <p class="hero-disclaimer">Research dashboard, not a live EEG decoder or a medical device.</p>
       </div>
-      <div class="hero-art" aria-label="Stylized diagram of scalp electrodes and an EEG trace. This is an illustration, not participant data.">
-        <div class="art-headline"><span>64 CHANNELS / SCALP EEG</span><span>ILLUSTRATION · NOT LIVE</span></div>
-        <svg viewBox="0 0 510 385" role="img" aria-label="Illustrative electrode array above a stylized EEG waveform">
-          <defs>
-            <radialGradient id="brain-glow"><stop stop-color="#40bbb4" stop-opacity=".25"/><stop offset="1" stop-color="#40bbb4" stop-opacity="0"/></radialGradient>
-          </defs>
-          <g class="art-grid" stroke="currentColor" stroke-width="1">
-            <path d="M0 70H510M0 140H510M0 210H510M0 280H510M85 0V385M170 0V385M255 0V385M340 0V385M425 0V385"/>
+      <figure class="research-figure">
+        <div class="figure-header"><span>FIG 01 / SIGNAL REPRESENTATION</span><span>SCHEMATIC · NOT RECORDED EEG</span></div>
+        <svg viewBox="0 0 540 310" role="img" aria-label="Three static illustrative EEG traces labelled Fz, Cz and Pz, followed by a simple feature extraction pathway">
+          <g stroke="#dfe6e1" stroke-width="1"><path d="M74 44H516M74 98H516M74 152H516M74 206H516M74 260H516"/><path d="M122 28V216M228 28V216M334 28V216M440 28V216"/></g>
+          <g fill="#697972" font-size="12" font-family="ui-monospace,monospace"><text x="22" y="72">Fz</text><text x="22" y="128">Cz</text><text x="22" y="182">Pz</text><text x="74" y="20">VOLTAGE OVER TIME / ILLUSTRATIVE</text></g>
+          <g stroke="#2c7164" fill="none" stroke-width="2.1" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M74 72L88 67L102 75L116 69L130 72L144 58L153 87L163 66L176 72L190 80L204 66L218 73L231 69L243 63L255 81L268 70L282 75L297 55L310 83L325 69L342 74L356 64L371 78L386 71L398 74L409 58L424 81L440 69L453 75L467 62L480 77L497 68L516 72"/>
+            <path d="M74 126L90 129L102 117L115 135L127 120L141 128L152 115L166 139L180 118L195 126L205 132L219 118L234 129L245 116L260 135L273 124L286 130L300 112L314 140L328 119L343 128L355 118L371 136L382 121L400 129L415 117L431 134L447 120L464 127L477 113L490 137L504 121L516 126"/>
+            <path d="M74 180L89 174L104 185L115 176L129 180L145 168L158 192L171 175L186 183L200 178L215 168L229 187L243 177L258 181L271 169L287 194L302 176L317 181L330 173L348 186L359 178L372 169L387 189L401 178L416 180L431 171L447 187L462 178L474 185L487 173L501 179L516 180"/>
           </g>
-          <circle cx="258" cy="174" r="145" fill="url(#brain-glow)"/>
-          <path d="M161 298C133 278 113 247 109 205C103 133 155 79 229 72C318 62 379 129 376 211C375 250 350 282 326 304L326 339L162 339Z" fill="#142e39" stroke="#67d1c7" stroke-width="2"/>
-          <path d="M116 198Q242 133 371 198M134 248Q248 197 355 246M165 117Q250 82 326 120M182 305Q248 287 319 304" fill="none" stroke="#75d2c8" stroke-opacity=".25" stroke-width="1.5"/>
-          <g id="electrode-points"></g>
-          <path class="trace" d="M12 350L45 350L58 337L68 361L78 349L102 350L114 321L127 373L137 347L158 350L170 336L183 362L199 349L218 350L229 332L242 364L255 351L277 350L290 336L305 367L316 349L340 350L355 328L367 367L380 350L406 350L417 339L427 361L441 349L466 350L479 337L497 350" fill="none" stroke="#f0b478" stroke-width="2.4" stroke-linejoin="round"/>
+          <g fill="#697972" font-family="ui-monospace,monospace" font-size="11"><text x="75" y="235">clean & segment</text><text x="278" y="235">extract features</text><text x="75" y="287">64 electrodes</text><text x="280" y="287">model → evaluate</text></g>
+          <path d="M75 247H510" stroke="#d5dfd8" stroke-width="1.5"/>
+          <rect x="75" y="250" width="95" height="7" rx="3" fill="#b5cec5"/><rect x="180" y="250" width="98" height="7" rx="3" fill="#83b6a5"/><rect x="289" y="250" width="98" height="7" rx="3" fill="#4f9280"/><rect x="398" y="250" width="111" height="7" rx="3" fill="#2c7164"/>
         </svg>
-        <div class="art-footer"><span>SIGNAL → FEATURES → MODEL → EVIDENCE</span><span>01 / 09</span></div>
+        <figcaption>EEG is measured over time, converted into numerical features, then tested against participants' reports. This diagram illustrates the process; it is not a recording from the datasets.</figcaption>
+      </figure>
+      <div class="hero-facts">
+        <div class="fact"><strong>64</strong><span>Scalp electrodes</span></div>
+        <div class="fact"><strong id="fact-subjects">39</strong><span>Depth-study participants</span></div>
+        <div class="fact"><strong id="fact-reports">1,707</strong><span>Reported ratings</span></div>
+        <div class="fact"><strong id="fact-auc">0.609</strong><span>Published depth AUC</span></div>
       </div>
-      <div class="hero-facts" aria-label="Study facts">
-        <div class="fact"><strong>64</strong><span>EEG electrodes</span></div>
-        <div class="fact"><strong id="fact-subjects">39</strong><span>depth-study participants</span></div>
-        <div class="fact"><strong id="fact-reports">1,707</strong><span>depth reports</span></div>
-        <div class="fact"><strong id="fact-auc">0.609</strong><span>published depth AUC</span></div>
-      </div>
-      <p class="published-status" id="published-status" role="status" aria-live="polite">Checking published analysis data…</p>
+      <p class="published-status" id="published-status" role="status" aria-live="polite">Reading the published results bundle…</p>
     </section>
 
     <section class="section shell" id="question" aria-labelledby="question-title">
@@ -132,8 +130,9 @@
         <article><span>DIFFERENT REPRESENTATION</span><h3>Riemannian ridge</h3><p>Converts covariance matrices to tangent-space vectors, then fits a regularized linear predictor.</p><code>covariance → tangent features → RidgeCV</code></article>
       </div>
       <div class="chart-panel">
-        <div class="chart-header"><div><span class="mini-eyebrow">PUBLISHED RESULTS / LIVE JSON</span><h3>Compare models on the same task</h3></div><label class="field-label" for="task-select">TASK <select id="task-select" aria-label="Choose decoding task"><option value="depth">Meditation depth</option><option value="concentration">Concentration</option><option value="mind_wandering">Mind wandering</option><option value="expertise">Expertise</option></select></label></div>
-        <div class="chart-note" id="chart-note">Loading published model scores…</div>
+        <div class="chart-header"><div><span class="mini-eyebrow">REPOSITORY PUBLISHED RESULTS</span><h3>Compare models on the same task</h3></div><label class="field-label" for="task-select">TASK <select id="task-select" aria-label="Choose decoding task"><option value="depth">Meditation depth</option><option value="concentration">Concentration</option><option value="mind_wandering">Mind wandering</option><option value="expertise">Expertise</option></select></label></div>
+        <div class="chart-note" id="chart-note">Reading published model scores…</div>
+        <div class="chart-axis" id="chart-axis" aria-hidden="true"></div>
         <div id="model-bars" class="model-bars" aria-live="polite"></div>
         <div id="model-details" class="model-details"></div>
         <p class="fine">AUC is a ranking metric, not percent accuracy. The expertise task instead reports participant-level classification accuracy. Scores and uncertainty shown here come from the published JSON, not recomputed in your browser.</p>
@@ -189,7 +188,7 @@
       <div class="section-intro"><h2 id="boundaries-title">A research platform, <em>not a finished brain reader.</em></h2></div>
       <div class="boundary-grid"><div class="boundary-card"><span class="boundary-icon">✓</span><h3>What works today</h3><p>Reproducible Python analysis components, documented comparisons, held-out-person evaluation, published results, and a website that explains those results.</p></div><div class="boundary-card"><span class="boundary-icon muted">×</span><h3>What isn't demonstrated</h3><p>A validated live concentration meter, clinical accuracy, robust single-electrode prediction, real-time EEG acquisition, or forecasting using only past data.</p></div></div>
       <div class="publishing-flow"><span>PYTHON ANALYSIS</span><span aria-hidden="true">→</span><span>CSV TABLES</span><span aria-hidden="true">→</span><span><code>publish_results.py</code></span><span aria-hidden="true">→</span><span><code>results.json</code></span><span aria-hidden="true">→</span><span>WEB DASHBOARD</span></div>
-      <p class="fine">The public results site fetches a JSON summary from GitHub. “Live” refers to fetching newly published research summaries, not streaming someone's EEG. Some preprocessing and normalization use full sessions and therefore cannot be treated as prospective predictions.</p>
+      <p class="fine">The public results site fetches a JSON summary from GitHub. The live status refers to fetching newly published research summaries, not streaming someone's EEG. Some preprocessing and normalization use full sessions and therefore cannot be treated as prospective predictions.</p>
     </section>
 
     <section class="section shell closing" id="next">
@@ -199,6 +198,6 @@
       <div class="closing-actions"><a class="action primary" href="index.html">Inspect the model dashboard ↗</a><a class="action secondary" href="https://github.com/ManasDasri/Med-EEG" target="_blank" rel="noopener noreferrer">Read the Med-EEG code ↗</a></div>
     </section>
   </main>
-  <footer class="footer shell"><span>NEURODIAL / RESEARCH ATLAS</span><p>All numerical research claims are attributed to <a href="https://github.com/ManasDasri/Med-EEG" target="_blank" rel="noopener noreferrer">Med-EEG</a>. Interactive diagrams are illustrations unless explicitly marked as live published values. <a href="index.html">Original results dashboard ↗</a></p></footer>
+  <footer class="footer shell"><span>NEURODIAL / RESEARCH NOTEBOOK</span><p>All numerical research claims are attributed to <a href="https://github.com/ManasDasri/Med-EEG" target="_blank" rel="noopener noreferrer">Med-EEG</a>. Interactive diagrams are illustrations unless explicitly marked as live published values. <a href="index.html">Original results dashboard ↗</a></p></footer>
 </body>
 </html>
