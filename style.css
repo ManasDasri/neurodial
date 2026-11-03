@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 :root {
   color-scheme: light;
   --page: #f7f8f5;
@@ -174,7 +175,7 @@ button{border-radius:6px}
 
 
 /* Shared visual language between research notebook and results explorer */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
 body{font-family:'DM Sans',system-ui,-apple-system,sans-serif}
 .page{max-width:1140px}
 h1{font-size:clamp(28px,3.3vw,42px)}
