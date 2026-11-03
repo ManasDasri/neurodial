@@ -101,19 +101,8 @@ function hoverable(node, content) {
   return node;
 }
 
-// ---------- theme ----------
-function applyTheme(t) {
-  if (t) document.documentElement.setAttribute("data-theme", t);
-  else document.documentElement.removeAttribute("data-theme");
-}
-try { applyTheme(localStorage.getItem("theme")); } catch (_) { /* storage blocked */ }
-document.getElementById("theme").addEventListener("click", () => {
-  const dark = matchMedia("(prefers-color-scheme: dark)").matches;
-  const current = document.documentElement.getAttribute("data-theme") || (dark ? "dark" : "light");
-  const next = current === "dark" ? "light" : "dark";
-  applyTheme(next);
-  try { localStorage.setItem("theme", next); } catch (_) { /* ignore */ }
-});
+// ---------- shared theme ----------
+// theme.js owns both pages' theme state and accessible toggle.
 
 // ---------- loading ----------
 function validBundle(d) {
